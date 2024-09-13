@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint --fix",
     "predeploy": "yarn build && vercel",
-    "deploy": "vercel --prod"
+    "deploy": "vercel --prod",
+    "export": "next export"
   },
   "author": "Samuel Kraft <samuelkraft@me.com> (https://github.com/samuelkraft)",
   "contributors": [
