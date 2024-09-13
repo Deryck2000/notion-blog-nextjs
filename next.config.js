@@ -4,7 +4,9 @@ const nextConfig = {
     appDir: true,
   },
   // @see https://beta.nextjs.org/docs/configuring/static-export#configuration
-  output: export,
+  output: "export",
 };
-
+module.exports = {
+  output: 'export',
+};
 module.exports = nextConfig
