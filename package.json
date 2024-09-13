@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint --fix",
     "predeploy": "yarn build && vercel",
-    "deploy": "NODE_ENV=development env"
+    "deploy": "NODE_ENV=development env",
     "export": "next export"
   },
   "author": "Samuel Kraft <samuelkraft@me.com> (https://github.com/samuelkraft)",
