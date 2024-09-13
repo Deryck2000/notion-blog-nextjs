@@ -32,6 +32,13 @@ jobs:
           cp -r out/* docs/
           touch ./docs/.nojekyll
 
+      - name: Check out directory contents
+        run: |
+          echo "Listing /out:"
+          ls -la out
+          echo "Listing /docs:"
+          ls -la docs
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
