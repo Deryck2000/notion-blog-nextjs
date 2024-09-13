@@ -26,6 +26,8 @@ jobs:
         run: |
           yarn build
           yarn export
+      - name: copy files
+        run: |
           mkdir -p docs
           cp -r out/* docs/
           touch ./docs/.nojekyll
