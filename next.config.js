@@ -1,5 +1,10 @@
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-    basePath: "",
-    output: "export",
-    images: { unoptimized: true } ,
-}
+  experimental: {
+    appDir: true,
+  },
+  // @see https://beta.nextjs.org/docs/configuring/static-export#configuration
+  output: "export",
+};
+
+module.exports = nextConfig
