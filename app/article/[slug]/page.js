@@ -11,7 +11,8 @@ import styles from '../../../styles/post.module.css';
 
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
-  const database = await getDatabase(); // データベースから全ページを取得
+  const database = await getDatabase();
+  // すべてのページのスラッグを取得して返す
   return database.map((page) => {
     const slug = page.properties.Slug?.formula?.string;
     return { slug }; // 動的パラメータとしてスラッグを設定
@@ -24,7 +25,7 @@ export default async function Page({ params }) {
   const blocks = await getBlocks(page?.id); // ページIDに基づいてブロックデータを取得
 
   if (!page || !blocks) {
-    return <div />; // ページやブロックが取得できない場合は空の div を返す
+    return <div>Page not found</div>; // ページやブロックが取得できない場合は「Page not found」を表示
   }
 
   return (
