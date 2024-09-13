@@ -28,9 +28,12 @@ jobs:
       - name: Build my App
         run: pnpm build && pnpm export && touch ./out/.nojekyll
 
+
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.0
-        with:
+        run: pnpm run deploy
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NNOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
           BRANCH: gh-pages
           FOLDER: out
