@@ -10,20 +10,35 @@ import { renderBlock } from '../../../components/notion/renderer';
 import styles from '../../../styles/post.module.css';
 
 // Return a list of `params` to populate the [slug] dynamic segment
-export async function generateStaticParams() {
-  const database = await getDatabase();
-  return database?.map((page) => {
+export async function getStaticPaths() {
+  const database = await getDatabase(); // データベースから全ページを取得
+  const paths = database.map((page) => {
     const slug = page.properties.Slug?.formula?.string;
-    return ({ id: page.id, slug });
+    return { params: { slug } }; // 動的パラメータとしてスラッグを設定
   });
+
+  return {
+    paths,
+    fallback: false, // ビルド時に指定されたパスのみ生成
+  };
 }
 
-export default async function Page({ params }) {
-  const page = await getPageFromSlug(params?.slug);
-  const blocks = await getBlocks(page?.id);
+export async function getStaticProps(context) {
+  const { slug } = context.params; // コンテキストからスラッグを取得
+  const page = await getPageFromSlug(slug); // スラッグに基づいてページデータを取得
+  const blocks = await getBlocks(page?.id); // ページIDに基づいてブロックデータを取得
 
+  return {
+    props: {
+      page,
+      blocks,
+    },
+  };
+}
+
+export default function Page({ page, blocks }) {
   if (!page || !blocks) {
-    return <div />;
+    return <div />; // ページやブロックが取得できない場合は空の div を返す
   }
 
   return (
@@ -49,28 +64,3 @@ export default async function Page({ params }) {
     </div>
   );
 }
-
-// export const getStaticPaths = async () => {
-//   const database = await getDatabase(databaseId);
-//   return {
-//     paths: database.map((page) => {
-//       const slug = page.properties.Slug?.formula?.string;
-//       return ({ params: { id: page.id, slug } });
-//     }),
-//     fallback: true,
-//   };
-// };
-
-// export const getStaticProps = async (context) => {
-//   const { slug } = context.params;
-//   const page = await getPage(id);
-//   const blocks = await getBlocks(id);
-
-//   return {
-//     props: {
-//       page,
-//       blocks,
-//     },
-//     revalidate: 1,
-//   };
-// };
